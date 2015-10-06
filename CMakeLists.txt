@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.3.2)
+cmake_minimum_required (VERSION 3.2.2)
 project (YX5300-mp3-control)
 
 set (CMAKE_CXX_FLAGS "-Wall -std=gnu++11")
