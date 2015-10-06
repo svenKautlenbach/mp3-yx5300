@@ -1,0 +1,3 @@
+[submodule "arap-utils"]
+	path = arap-utils
+	url = https://github.com/svenKautlenbach/arap-utils
