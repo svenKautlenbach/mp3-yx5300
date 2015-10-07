@@ -25,6 +25,7 @@ int main (int argc, char* argv[])
 					<< "vu - volume up" << std::endl
 					<< "vd - volume down" << std::endl
 					<< "reset - reset the chip" << std::endl
+					<< "pli - play index (asks folder and track number after this command)" << std::endl
 					<< "pl - play" << std::endl
 					<< "pa - pause" << std::endl
 					<< "help - print this help menu" << std::endl; 
@@ -41,6 +42,7 @@ int main (int argc, char* argv[])
 		std::vector<uint8_t> volumeUp = 	{0x7E, 0xFF, 0x06, 0x04, 0, 0, 0, 0xEF};
 		std::vector<uint8_t> volumeDown = 	{0x7E, 0xFF, 0x06, 0x05, 0, 0, 0, 0xEF};
 		std::vector<uint8_t> chipReset = 	{0x7E, 0xFF, 0x06, 0x0C, 0, 0, 0, 0xEF};
+		std::vector<uint8_t> playIndex = 	{0x7E, 0xFF, 0x06, 0x0F, 0, 0, 0, 0xEF};
 		std::vector<uint8_t> play = 		{0x7E, 0xFF, 0x06, 0x0D, 0, 0, 0, 0xEF};
 		std::vector<uint8_t> pause = 		{0x7E, 0xFF, 0x06, 0x0E, 0, 0, 0, 0xEF};
 
@@ -73,6 +75,19 @@ int main (int argc, char* argv[])
 			else if (command == "reset")
 			{
 				serialPort.sendData(chipReset);
+			}
+			else if (command == "pli")
+			{
+				int folderNumber;
+				int trackNumber;
+				std::cout << "Insert folder number:";
+				std::cin >> folderNumber;
+				std::cout << "Insert track number:";
+				std::cin >> trackNumber;
+				auto command = playIndex;
+				command.at(5) = static_cast<uint8_t>(folderNumber);
+				command.at(6) = static_cast<uint8_t>(trackNumber);
+				serialPort.sendData(command);
 			}
 			else if (command == "pl")
 			{
